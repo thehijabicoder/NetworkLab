@@ -5,7 +5,8 @@ Write a client/server program with the socket interface. The client program may 
 &nbsp;  
 a) Calculate and record the data transmission rate every 0.1 second for a 50 MB data transmission with message size of 500 bytes.    
 b) Plot to display the results   
-[Hint: Use timer and handler functions].  
+- [plot.py](https://github.com/thehijabicoder/NetworkLab/blob/master/ass3/plot.py) is used to plot the graphs.
+
 
 ### 2. [q2_c_server.c](https://github.com/thehijabicoder/NetworkLab/blob/master/ass3/q2/q2_c_server.c)  
 ###    [q2_c_client.c](https://github.com/thehijabicoder/NetworkLab/blob/master/ass3/q2/q2_c_client.c)  
