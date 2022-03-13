@@ -28,7 +28,7 @@ char command[MAX];
 char msg[MAX];
 int n = 0;
 
-void login(int sockfd)
+int login(int sockfd)
 {
     while (1)
     {
@@ -39,6 +39,11 @@ void login(int sockfd)
         command[strlen(command) - 1] = '\0';
 
         write(sockfd, command, MAX);
+
+        if (strcmp(command, "QUIT") == 0)
+        {
+            return 0;
+        }
 
         bzero(&returncode, sizeof(returncode));
         read(sockfd, &returncode, sizeof(returncode));
@@ -57,7 +62,7 @@ void login(int sockfd)
             bzero(command, MAX);
             read(sockfd, command, MAX);
             printf("%s\n", command);
-            return;
+            return 1;
         case 310:
             printf("Incorrect password\n");
             break;
@@ -95,7 +100,7 @@ void store_file(int sockfd, char command[])
 
     while (n = fread(buffer, 1, MAX, fp) > 0)
     {
-        write(sockfd, buffer, n);
+        write(sockfd, buffer, MAX);
         bzero(buffer, MAX);
     }
 
@@ -237,8 +242,8 @@ void connect_server()
     read(sockfd, &returncode, sizeof(returncode));
     printf("\n~%d~\n", returncode);
 
-    login(sockfd);
-    access_server(sockfd);
+    if (login(sockfd))
+        access_server(sockfd);
 
     close(sockfd);
 }

@@ -1,0 +1,56 @@
+ASSIGNMENT - 6    README
+
+
+- The program is a TCP Socket program implemented as a multi-client file transfer application.
+- Run the programs FTAPServer.c file in FTAPServer directory and FTAPClient.c file in FTAPClient directory.
+- FTAPServer listens on port 4035.
+- The server creates a child program using fork for each client connected.
+
+
+- `START` command to connect to the server.
+- Server sends 200 returncode to the client once its connected.
+
+
+- `QUIT` to terminate the client program if user is not logged in.
+- If user is looged in, and `QUIT` command is entered, the server sends a message `BYE <user>!` and upon recieving this,  client closes the connection and waits for next input . (i.e., connect again and login with new user or terminate the program).
+
+
+- Once the client program is connected, User can log in using `USERN <username>` and `PASSWD <password>` for username and password respectively.
+- The server sends appropriate return codes to the client during the login process.
+
+
+
+- After logging in, user can send the following commands to the server.
+
+
+- CreateFile <filename.ext> : 
+        The server upon recieving the command sends "File Already Exists" if file in the same name exists  or creates a new file with the given name and send "File Creation Successful". 
+        - Implemented using FILE and fopen .
+        - The client displays the message from the server and then waits for next user input.
+        
+        
+
+- ListDir : 
+        The server sends each file and folder names in the server's directory to the client and at the end it sends a message "END OF DIRECTORY LISTING".
+        - The server program gets the file names using DIR datatype and struct dirent available in dirent.h header file.
+        - The client program reads and prints the message from the server to the client until it recieves "END OF DIRECTORY LISTING".
+
+
+
+- StoreFile <filename.ext> : 
+        The client program upon recieving this command from user input, sends the command to the server and opens the file and sends chunks of 80 bytes of the file to the server and the message "END OF THE FILE" at completion.
+        - The server program creates a new file with the name and writes the chunks of 80 bytes it recieves into that file.
+        - The header file time.h has clock() function which is used to calculate the time for the whole process and is printed onto the terminal.
+        - The client prints "File Uploaded Successfully", once it completely send the file.
+        - The server sends the message "File Saved Succesfully", when it completely recieves the file content and stores it.
+        - The client prints the message recieved from the server and the time elapsed.
+        
+        
+
+- GetFile <filename.ext> :
+        The server check if the file exists and sends "File Doesn't Exist" message to the client if it doesn't exist. 
+        If the file exists, the server sends the contents of the file to the client and after completion the message "END OF THE FILE" is also sent so that the client knows the EOF has reached.
+        - The client stores the contents of the file to the new file and prints "File Downloaded Successfully" and the time elapsed is calculated and printed to the terminal.
+
+-QUIT :
+        The server sends the message "BYE <username>" and closes the connection to the client after recieving the command from the client and client upon recieving the message prints it onto the terminal and terminates the connection with the server.(i.e. the user is logged out).

@@ -21,7 +21,7 @@ char name[name_len];
 
 void overwrite_stdout()
 {
-    printf("\r>> ");
+    printf("\r >> ");
     fflush(stdout);
 }
 

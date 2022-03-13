@@ -15,7 +15,7 @@
 #define SA struct sockaddr
 
 /*
-Return Codes:
+Return Codes:B
 200 OK Connection is set up
 300 Correct Username; Need password
 301 Incorrect Username
@@ -40,7 +40,7 @@ int get_password_index(char line[])
     return i;
 }
 
-void login(int connfd)
+int login(int connfd)
 {
     char fileline[MAX];
     char password[MAX];
@@ -92,12 +92,17 @@ void login(int connfd)
                 write(connfd, &returncodes[3], sizeof(returncodes[3]));
                 sprintf(msg, "Welcome, %s!", username);
                 write(connfd, msg, sizeof(msg));
-                return;
+                return 1;
             }
             else
             {
                 write(connfd, &returncodes[4], sizeof(returncodes[4]));
             }
+        }
+        else if (strcmp(command, "QUIT") == 0)
+        {
+
+            return 0;
         }
         else
         {
@@ -205,7 +210,7 @@ void get_file(char filename[], int connfd)
         bzero(buffer, MAX);
         while (n = fread(buffer, 1, MAX, fp) > 0)
         {
-            write(connfd, buffer, n);
+            write(connfd, buffer, MAX);
             bzero(buffer, MAX);
         }
         if (!feof(fp) || ferror(fp))
@@ -288,8 +293,8 @@ void accept_connection(int sockfd)
         if (fork() == 0)
         {
             close(sockfd);
-            login(connfd);
-            serve(connfd);
+            if (login(connfd))
+                serve(connfd);
             exit(0);
         }
     }

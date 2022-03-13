@@ -152,7 +152,7 @@ void chatroom(int sockfd, pthread_t thread_id)
 
         if (client_count + 1 == MAX_CLIENTS)
         {
-            printf("Chatroom is full. Connection rejected from %s %d\n", inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
+            printf("Chatroom is full. Connection rejected for %s %d\n", inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
             close(connfd);
             continue;
         }
