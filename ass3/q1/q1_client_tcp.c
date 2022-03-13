@@ -60,7 +60,7 @@ void chat(int sockfd)
 
 int main()
 {
-    int sockfd, connfd;
+    int sockfd;
     struct sockaddr_in servaddr, cli;
 
     // socket create and verification

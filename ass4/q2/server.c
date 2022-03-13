@@ -130,7 +130,7 @@ int main()
     }
     else
     {
-        printf("[-]Error in binding.\n");
+        printf("[-]Error in Listening.\n");
     }
 
     chat(sockfd);
