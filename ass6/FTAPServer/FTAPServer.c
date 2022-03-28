@@ -15,7 +15,7 @@
 #define SA struct sockaddr
 
 /*
-Return Codes:B
+Return Codes:
 200 OK Connection is set up
 300 Correct Username; Need password
 301 Incorrect Username
