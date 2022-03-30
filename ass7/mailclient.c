@@ -201,6 +201,15 @@ void send_mail(int sockfd)
                     {
                         write(sockfd, from, 80);
                         write(sockfd, to, 80);
+
+                        bzero(&returncode, sizeof(returncode));
+                        read(sockfd, &returncode, sizeof(returncode));
+                        if (returncode == 400)
+                        {
+                            printf("\n Recipient Not Found \n");
+                            return;
+                        }
+
                         write(sockfd, subject, 80);
                         int i = 0;
                         while (strcmp(message[i], ".\n") != 0)

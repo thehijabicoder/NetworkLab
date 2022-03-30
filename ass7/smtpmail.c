@@ -17,8 +17,10 @@ Return Codes:
 301 Incorrect Username
 305 User Authenticated with password
 310 Incorrect password
+400 Recipient not found
+200 Recipient Exists
 */
-int returncodes[] = {301, 305, 310};
+int returncodes[] = {301, 305, 310, 400, 200};
 char username[MAX], password[MAX];
 
 int get_password_index(char line[])
@@ -107,8 +109,10 @@ void serve(int connfd)
     if (fp == NULL)
     {
         printf("\nFile not found\n");
-        exit(0);
+        write(connfd, &returncodes[3], sizeof(returncodes[3]));
+        return;
     }
+    write(connfd, &returncodes[4], sizeof(returncodes[4]));
 
     fprintf(fp, "%s", from);
     fprintf(fp, "%s", filecontent);
